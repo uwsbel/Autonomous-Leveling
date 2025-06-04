@@ -109,10 +109,10 @@ def convert_pointcloud_to_heightmap(pile_height, push_seq):
     # Load only the specific folder
     folder_name = f"soil_leveling_{push_seq}"
     
-    # Wait for fluid*.csv file to appear (max 300 seconds)
+    # Wait for fluid*.csv file to appear (max 2000 seconds)
     start_time = time.time()
     fluid_files = []
-    while time.time() - start_time < 300:  # 300 seconds timeout
+    while time.time() - start_time < 2000:  # 2000 seconds timeout
         fluid_files = [f for f in os.listdir(pc_dir) if f.startswith('fluid') and f.endswith('.csv')]
         if fluid_files:
             break
@@ -120,16 +120,12 @@ def convert_pointcloud_to_heightmap(pile_height, push_seq):
         time.sleep(5)  # Check every 5 seconds
     
     if not fluid_files:
-        raise FileNotFoundError(f"No fluid*.csv file found in {pc_dir} after 300 seconds")
+        raise FileNotFoundError(f"No fluid*.csv file found in {pc_dir} after 2000 seconds")
     
     if len(fluid_files) > 1:
         print(f"Warning: Multiple fluid files found in {pc_dir}, using the first one: {fluid_files[0]}")
     
     csv_path = os.path.join(pc_dir, fluid_files[0])
-    
-    # Wait for the file to appear (max 10 minutes)
-    if not wait_for_file(csv_path, max_wait_time=600):
-        raise FileNotFoundError(f"Fluid file not found in {pc_dir} after timeout")
     
     # Give the file a little time to be fully written
     time.sleep(2)
