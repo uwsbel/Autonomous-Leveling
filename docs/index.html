@@ -1,10 +1,455 @@
 <!DOCTYPE html>
+<meta charset="utf-8">
+
 <html>
+
+<style type="text/css">
+body {
+	font-family: "Titillium Web", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight: 300;
+	font-size: 17px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 980px;
+}
+h1 {
+	font-weight:300;
+	line-height: 1.15em;
+}
+
+h2 {
+	font-size: 1.75em;
+}
+a:link,a:visited {
+	color: #1367a7;
+	text-decoration: none;
+}
+a:hover {
+	color: #208799;
+}
+h1, h2, h3 {
+	text-align: center;
+}
+h1 {
+	font-size: 40px;
+	font-weight: 500;
+}
+h2, h3 {
+	font-weight: 400;
+	margin: 16px 0px 4px 0px;
+}
+.paper-title {
+	padding: 16px 0px 16px 0px;
+}
+section {
+	margin: 32px 0px 32px 0px;
+	text-align: justify;
+	clear: both;
+}
+.col-5 {
+	 width: 20%;
+	 float: left;
+}
+.col-4 {
+	 width: 25%;
+	 float: left;
+}
+.col-3 { /* Adjusted for potentially more authors */
+    width: calc(100% / 4 - 20px); /* Example for 4 authors per row */
+    min-width: 180px; /* Minimum width for an author block */
+	float: left;
+    margin: 0 10px;
+    box-sizing: border-box;
+}
+.col-2 {
+	 width: 50%;
+	 float: left;
+}
+.row, .author-row, .affil-row {
+	 overflow: auto;
+}
+.author-row, .affil-row {
+	font-size: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.author-row .author-block { /* Changed from .col-3 for clarity */
+    flex: 1 1 auto; /* Allow flexible growth and shrink */
+    max-width: 220px; /* Max width per author */
+    min-width: 180px; /* Min width */
+    text-align: center;
+    margin: 10px 10px; /* Adjust spacing */
+}
+.author-row p {
+	font-size: 16px;
+	margin-top: 0px;
+    margin-bottom: 5px;
+}
+.row {
+	margin: 16px 0px 16px 0px;
+}
+.authors {
+	font-size: 18px;
+}
+.affil-row {
+	margin-top: 16px;
+    font-size: 16px; /* Smaller font for affiliations if needed */
+}
+.teaser {
+	max-width: 100%;
+}
+.text-center {
+	text-align: center;
+}
+.screenshot {
+	width: 256px;
+	border: 1px solid #ddd;
+}
+.screenshot-el {
+	margin-bottom: 16px;
+}
+hr {
+	height: 1px;
+	border: 0;
+	border-top: 1px solid #ddd;
+	margin: 0;
+}
+.material-icons {
+	vertical-align: -6px;
+}
+p {
+	line-height: 1.25em;
+}
+.caption_justify {
+	font-size: 16px;
+	color: #666;
+	text-align: justify;
+	margin-top: 8px; /* Increased margin-top for captions */
+	margin-bottom: 16px; /* Increased margin-bottom for captions */
+}
+.caption {
+	font-size: 16px;
+	color: #666;
+	text-align: center;
+	margin-top: 8px;
+	margin-bottom: 5px;
+}
+.caption_inline {
+	font-size: 16px;
+	color: #666;
+	text-align: center;
+	margin-top: 8px;
+	margin-bottom: 0px;
+}
+.caption_bold {
+	font-size: 16px;
+	color: #666;
+	text-align: center;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	font-weight: bold;
+}
+video {
+	display: block;
+	margin: auto;
+    border: 1px solid #ddd; /* Added border to video */
+}
+figure {
+	display: block;
+	margin: auto;
+	margin-top: 10px;
+	margin-bottom: 20px; /* Increased bottom margin for figures */
+}
+.blue {
+	color: #2c82c9;
+	font-weight: bold;
+}
+.orange {
+	color: #d35400;
+	font-weight: bold;
+}
+.flex-row {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.paper-btn {
+  position: relative;
+  text-align: center;
+  display: inline-block;
+  margin: 8px;
+  padding: 8px 18px;
+  border-width: 0;
+  outline: none;
+  border-radius: 2px;
+  background-color: #1367a7;
+  color: #ecf0f1 !important;
+  font-size: 20px;
+  width: auto;
+  height: auto;
+  font-weight: 600;
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+.paper-btn-parent {
+	display: flex;
+	justify-content: center;
+	margin: 16px 0px;
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+}
+.paper-btn:hover {
+	background-color: #208799; /* Darker shade on hover */
+    opacity: 1; /* Override previous opacity */
+}
+.container {
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 16px;
+	padding-right: 16px;
+}
+.venue { /* Style for conference/journal name */
+	color: #6c6c6c;
+	font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* Responsive image styling */
+img.responsive-img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd; /* Optional: add border to images */
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.figure-group { /* For grouping multiple figures if needed */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.figure-group .figure-item {
+    flex-basis: calc(50% - 20px); /* Two items per row */
+    margin: 10px;
+    text-align: center;
+}
+.figure-item img {
+    max-width: 100%;
+    height: auto;
+}
+
+</style>
+<link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,600,400italic,600italic,300,300italic' rel='stylesheet' type='text/css'>
 <head>
-  <title>My Project</title>
+	<title>Data-Driven Bulldozer Blade Control for Autonomous Terrain Leveling</title>
+	<meta property="og:description" content="Data-Driven Bulldozer Blade Control for Autonomous Terrain Leveling: A simulation-driven framework for optimizing bulldozer blade control to enhance leveling performance using high-fidelity simulations and neural networks."/>
+	<link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+
+	<!-- MathJax for rendering mathematical equations -->
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	<script>
+		MathJax = {
+			tex: {
+				inlineMath: [['$', '$'], ['\\(', '\\)']],
+				displayMath: [['$$', '$$'], ['\\[', '\\]']]
+			}
+		};
+	</script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FBE2GBDP8Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-FBE2GBDP8Y');
+  </script>
 </head>
+
 <body>
-  <h1>Welcome to My Project Site</h1>
-  <p>This is hosted with GitHub Pages.</p>
+<div class="container">
+	<!-- TITLE SECTION -->
+	<div class="paper-title">
+		<h1>Data-Driven Bulldozer Blade Control for Autonomous Terrain Leveling</h1>
+	</div>
+
+	<!-- PAPER BUTTONS SECTION -->
+	<div style="clear: both">
+		<div class="paper-btn-parent">
+			<a class="paper-btn" href="assets/paper2025.pdf" target="_blank">
+				<span class="material-icons"> description </span>
+				Paper
+			</a>
+			<a class="paper-btn" href="https://anonymous.4open.science/r/Autonomous-Leveling/" target="_blank"> <span class="material-icons"> code </span> Github Repo
+			</a>
+		</div>
+	</div>
+
+    <!-- VIDEO PRESENTATION SECTION -->
+    <section id="video_presentation_section">
+        <div class="text-center" style="margin-top: 20px; margin-bottom: 30px;"> <div style="position:relative;padding-top:56.25%; margin: 0 auto; width: 100%;">
+                    <iframe src="https://www.youtube.com/embed/Qal3XfKxtS0" type="video/mp4" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;overflow:hidden;"></iframe>
+            </div>
+            <p class="caption" style="margin-top: 15px;">
+                Demonstration of the autonomous terrain leveling process.
+            </p>
+        </div>
+    </section>
+    
+    
+
+	<!-- ABSTRACT SECTION -->
+	<section id="abstract">
+		<h2>Abstract</h2>
+		<hr>
+		<p>
+            Autonomous leveling of granular materials is a ubiquitous yet challenging operation in automated construction due to the complex physics governing the soil-tool interaction. This paper outlines a simulation-driven framework for optimizing low-level bulldozer blade control (pitch and height) to enhance leveling performance. The approach uses high-fidelity, physics-based simulations to generate training data. This data informs a Neural Network (NN) based reduced-order model that accurately predicts both the terrain evolution and the leveling operation duration in response to blade actions. A gradient-based, multi-objective optimization algorithm then utilizes the reduced-order model to determine optimal, time-varying blade control profiles, managing the trade-off between leveling flatness and operation time. The proposed method augments the state-of-the-art by producing policies that can readily level arbitrary soil pile configurations while avoiding vehicle immobilization and achieving better leveling efficiency. The system exhibits robustness to variations in initial pile geometry, and offers explicit control over the trade-off between leveling quality and operational efficiency. By integrating high-fidelity physics into the controller design and providing an open-source simulation pipeline, this work provides a low-level control solution that complements existing global path planning algorithms for autonomous construction operations. The project's resources, including code and media demonstration, are available at: <a href="https://anonymous.4open.science/r/Autonomous-Leveling/" target="_blank">https://anonymous.4open.science/r/Autonomous-Leveling/</a>
+		</p>
+	</section>
+
+    <!-- OVERVIEW FIGURE SECTION -->
+    <section id="overview_figure">
+		<figure style="width: 100%;">
+			<a href="assets/fpp_new.png" target="_blank"><img class="responsive-img" src="assets/fpp_new.png" alt="Overview of the study: Proposed learning-based control for efficient soil displacement."></a>
+			<p class="caption_justify">
+				<strong>Fig 1. Overview of the study:</strong> (a) Initial configuration: The vehicle is positioned before a soil pile targeted for leveling. (b) Fixed blade parameters: Suboptimal blade height and pitch leading to high resistance and vehicle immobilization. (c) Baseline control (fixed parameters): The vehicle traverses the terrain but achieves suboptimal leveling due to a static blade configuration. (d) Proposed learning-based control: Optimized blade pitch and height based on the initial terrain state, achieving efficient soil displacement and enhanced leveling performance.
+			</p>
+		</figure>
+	</section>
+
+    <!-- PROBLEM STATEMENT SECTION -->
+    <section id="problem_statement_section">
+        <h2>The Challenge of Autonomous Terrain Leveling</h2>
+        <hr>
+        <p>
+            While existing methods have demonstrated effectiveness in bulldozer path planning, they often overlook the nuanced interactions between the bulldozer and terrain. The consequences of this oversight are twofold:
+            <ol>
+                <li>It's difficult to predict the final terrain heightmap profile upon completion of the operation.</li>
+                <li>The vehicle may become immobilized by dense soil piles, leading to operational failure (as illustrated in Fig. 1b).</li>
+            </ol>
+            In practical construction site operations, skilled human operators frequently adjust blade control actions (like pitch and height) during leveling tasks. Precise blade control throughout the operation is crucial for achieving the desired ground leveling quality and operational efficiency. This study addresses the need for an algorithm that optimizes these low-level blade actions to maximize ground leveling efficiency and safety.
+        </p>
+    </section>
+
+    <!-- APPROACH SECTION -->
+    <section id="our_approach_section">
+        <h2>Our Simulation-Driven Approach</h2>
+        <hr>
+        <p>
+            This paper introduces a simulation-driven framework for optimizing micro-level bulldozer blade control. Our methodology integrates high-fidelity physics into the control design process:
+        </p>
+        <ol>
+            <li><strong>High-Fidelity Data Generation:</strong> We use the Chrono simulation engine, specifically Chrono::FSI and Chrono::Vehicle, to run physics-based terramechanics simulations. These simulations capture complex soil-tool interactions, vehicle dynamics, tire slip, and sinkage. This process generates comprehensive training data detailing how terrain evolves under different blade control actions (pitch and height). Figure 2 illustrates the data collection pipeline.</li>
+            <li><strong>Differentiable Reduced-Order Model:</strong> The extensive data from simulations is used to train a Neural Network (NN) based reduced-order model. This NN, detailed in Figure 3, learns to predict the post-operation terrain heightmap and the operation duration given an initial heightmap and blade control inputs. The differentiability of this NN is key for optimization. </li>
+            <li><strong>Gradient-Based Optimization:</strong> Leveraging the differentiable NN model, we formulate a multi-objective optimization problem. This problem aims to find optimal, time-varying blade control profiles that maximize leveling flatness (matching a desired flat terrain) while minimizing operational time. The optimization is solved using the Adam algorithm.</li>
+        </ol>
+        <p>
+            This approach allows for the determination of optimal blade actions tailored to specific initial terrain conditions, leading to improved leveling performance and efficiency.
+        </p>
+        <figure style="width: 100%;">
+            <a href="assets/data_collection_pipeline.png" target="_blank"><img class="responsive-img" src="assets/data_collection_pipeline.png" alt="Data collection process"></a>
+            <p class="caption_justify">
+                <strong>Fig 2. Overview of the data collection process</strong> involving a simulated two-pass terrain leveling operation. Each simulation yields multiple training samples, linking initial heightmaps and blade control parameters to resulting heightmaps and operation durations.
+            </p>
+        </figure>
+        <hr>
+        <div class="figure-group">
+            <div class="figure-item" style="flex-basis: calc(60% - 20px);"> <a href="assets/nn_arch.png" target="_blank"><img src="assets/nn_arch.png" alt="Neural Network Architecture"></a>
+                <p class="caption_justify">
+                    <strong>Fig 3. Neural Network Architecture.</strong> The initial terrain heightmap is processed by a CNN encoder, and blade control inputs by an action-processing module. These are combined and fed through fully connected layers to predict the post-operation heightmap (via a CNN decoder) and operation time.
+                </p>
+            </div>
+            <!-- <div class="figure-item" style="flex-basis: calc(40% - 20px);">
+                <a href="assets/nn_models_training.png" target="_blank"><img src="assets/nn_models_training.png" alt="Model prediction performance comparison"></a>
+                <p class="caption_justify">
+                    <strong>Fig 4. Model prediction performance comparison,</strong> showing the trade-off between model size and prediction loss. The medium model was chosen for its balance of accuracy and efficiency.
+                </p>
+            </div> -->
+        </div>
+    </section>
+
+    <!-- RESULTS SECTION -->
+    <section id="results_section">
+        <h2>Experimental Results</h2>
+        <hr>
+        <p>
+            We evaluated our autonomous leveling scheme through a series of experiments. The bulldozer performs two forward leveling passes, with the control actions for each pass optimized based on the current terrain heightmap. We compare our algorithm against fixed-blade strategies and assess its robustness and the trade-off between leveling quality and operational time. Leveling performance is quantified using the percentage change in Mean Squared Error ($\Delta$MSE) relative to a desired flat terrain.
+        </p>
+
+        <p>
+            Our experiments include: 
+            <ol>
+                <li>Demonstration of various scenarios for same initial pile height</li>
+                <li>Performance comparison on varying pile heights</li>
+                <li>Analysis of the quality-time trade-off by varying optimization parameters</li>
+            </ol>
+            The following figures illustrate these key experimental findings.
+        </p>
+
+        <figure style="width: 75%; margin-left: auto; margin-right: auto;">
+            <a href="assets/result_comparison.png" target="_blank"><img class="responsive-img" src="assets/result_comparison.png" alt="Algorithm performance demonstration"></a>
+            <p class="caption_justify">
+                <strong>Fig 5. Algorithm performance demonstration</strong> with an initial soil pile height of 0.37m. <em>Top row:</em> Fixed blade parameters lead to vehicle immobilization. <em>Second row:</em> Another fixed blade setting results in insufficient leveling. <em>Third row:</em> First pass with our optimized control ($\Delta$MSE=26.20%). <em>Bottom row:</em> Second pass with optimized control achieves superior leveling ($\Delta$MSE=48.13%).
+            </p>
+        </figure>
+        <hr>
+        <!-- <figure style="width: 70%; margin-left: auto; margin-right: auto;"> <a href="assets/action_profile.png" target="_blank"><img class="responsive-img" src="assets/action_profile.png" alt="Blade control action profiles"></a>
+            <p class="caption_justify">
+                <strong>Fig 6. Blade control action profiles</strong> logged during experiments referenced in Fig. 5 and Fig. 8. The optimal control (blue and orange lines) dynamically adjusts pitch and vertical position, contrasting with fixed strategies (red and green lines). (Click image to enlarge)
+            </p>
+        </figure> -->
+        <hr>
+        <figure style="width: 75%; margin-left: auto; margin-right: auto;">
+            <a href="assets/diff_heights.png" target="_blank"><img class="responsive-img" src="assets/diff_heights.png" alt="Algorithm performance across different initial pile heights"></a>
+            <p class="caption_justify">
+                <strong>Fig 7. Algorithm performance across different initial pile heights.</strong> The proposed algorithm consistently achieves effective leveling ($\Delta$MSE scores) after two passes for various initial pile configurations.
+            </p>
+        </figure>
+        <hr>
+        <figure style="width: 75%; margin-left: auto; margin-right: auto;">
+            <a href="assets/tradeoff.png" target="_blank"><img class="responsive-img" src="assets/tradeoff.png" alt="Trade-off between leveling quality and operation time"></a>
+            <p class="caption_justify">
+                <strong>Fig 8. Illustration of the trade-off between leveling quality ($\Delta$MSE) and operation time</strong> by varying the penalty parameter $\lambda$ in the optimization. A smaller $\lambda$ (e.g., $1 \times 10^{-6}$, right) prioritizes flatness, resulting in higher $\Delta$MSE (48.13%) but longer duration (12.08s). A larger $\lambda$ (e.g., $5 \times 10^{-4}$, left) prioritizes speed, reducing duration (10.82s) but also $\Delta$MSE (26.61%).
+            </p>
+        </figure>
+    </section>
+    
+    <!-- PAPER ACCESS & RESOURCES SECTION -->
+    <section id="paper_summary_links">
+		<h2>Paper Access & Resources</h2> <hr>
+		<div class="flex-row">
+			<div style="box-sizing: border-box; padding: 16px; margin: auto; text-align: center;">
+				<a href="assets/paper2025.pdf" target="_blank"><img class="screenshot" src="assets/fpp_new.png" alt="Paper first page preview"></a>
+                <p class="caption">Click to download PDF</p>
+			</div>
+			<div style="width: 60%; padding-left: 20px;">
+				<p><b>Data-Driven Bulldozer Blade Control for Autonomous Terrain Leveling</b></p>
+				<p>Anonymous Submission</p>
+				<div style="margin-top:10px;"><span class="material-icons"> description </span><a href="assets/paper2025.pdf" target="_blank"> Paper preprint (PDF)</a></div>
+				<div style="margin-top:5px;"><span class="material-icons"> science </span><a href="https://anonymous.4open.science/w/Autonomous-Leveling/" target="_blank"> Code, Data & Resources Repository</a></div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ACKNOWLEDGEMENTS SECTION -->
+	<section id="acknowledgements">
+		<h2>Acknowledgements</h2>
+		<hr>
+		<div class="row">
+			<p>
+            The website template was adapted from <a href="https://tzofi.github.io/diser/" target="_blank">Tzofi Klinghoffer</a>.
+			</p>
+		</div>
+	</section>
+	<!-- END OF CONTENT -->
+</div>
+
 </body>
 </html>
