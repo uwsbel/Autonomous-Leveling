@@ -1,16 +1,11 @@
 # Autonomous-Leveling
 
 ## Overview
-A simulation platform for autonomous soil leveling.
+A simulation platform for autonomous soil leveling. Noticed since terramechanics model utilizes GPU parallelization tool--CUDA, so it is **required** to have NVDIA graphic card to run the code. The code has been tested on system: Ubuntu 22.04.5 LTS.
 
 
-## Clone Repo
-
-```bash
-git clone https://github.com/yourusername/Autonomous-Leveling.git
-cd Autonomous-Leveling
-```
-remember to do `git lfs update` to get the NN weights.
+## Download Repo
+Click `Download Repository` on the top right corner to download the whole repository. 
 ## Usage
 
 ### Install Chrono Simulation Engine
@@ -25,8 +20,12 @@ cd chrono-engine && mkdir build && cd build
 Run ccmake or cmake gui to build and install the chrono engine. you need to enable these following modules enabled: Vehicle, FSI, VSG. The installation process would be similar as described in official Chrono document: https://api.projectchrono.org/tutorial_install_chrono.html. 
 
 ### Build the chrono demo for autonomous leveling
-Once the chrono simulation engine is installed, we can link the built chrono engine and build autonomous leveling demo: `sim/soil_leveling.cpp` 
+Once the chrono simulation engine is installed, we can link the built chrono engine and build autonomous leveling demo: `sim/soil_leveling.cpp`. First, we want to get into unziped folder:
 
+```bash
+cd <path_to_Autonomous-leveling_folder>
+```
+Then we want to build the cpp simulation code:
 ```bash
 cd sim && mkdir build && cd build && ccmake ../ -G Ninja
 ```
@@ -63,6 +62,3 @@ cd sim/ && ./build/soil_leveling_sim --pile_height 0.37
 ```
 ## Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
